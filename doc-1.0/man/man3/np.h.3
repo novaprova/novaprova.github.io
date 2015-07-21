@@ -1,0 +1,469 @@
+.TH "np.h" 3 "15 Aug 2012" "Version 0.1" "NovaProva" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+np.h \- NovaProva C API.  
+
+.PP
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNP_PASS\fP   __np_pass(__FILE__, __LINE__)"
+.br
+.RI "\fICauses the running test to terminate immediately with a PASS result. \fP"
+.ti -1c
+.RI "#define \fBNP_FAIL\fP   __np_fail(__FILE__, __LINE__)"
+.br
+.RI "\fICauses the running test to terminate immediately with a FAIL result. \fP"
+.ti -1c
+.RI "#define \fBNP_NOTAPPLICABLE\fP   __np_notapplicable(__FILE__, __LINE__)"
+.br
+.RI "\fICauses the running test to terminate immediately with a NOTAPPLICABLE result. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT\fP(cc)"
+.br
+.RI "\fITest that a given boolean condition is true, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_TRUE\fP(a)"
+.br
+.RI "\fITest that a given boolean condition is true, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_FALSE\fP(a)"
+.br
+.RI "\fITest that a given boolean condition is false, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two signed integers are equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_NOT_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two signed integers are not equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_PTR_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two pointers are equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_PTR_NOT_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two pointers are not equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_NULL\fP(a)"
+.br
+.RI "\fITest that a pointer is NULL, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_NOT_NULL\fP(a)"
+.br
+.RI "\fITest that a pointer is not NULL, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_STR_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two strings are equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_ASSERT_STR_NOT_EQUAL\fP(a, b)"
+.br
+.RI "\fITest that two strings are not equal, otherwise FAIL the test. \fP"
+.ti -1c
+.RI "#define \fBNP_PARAMETER\fP(nm, vals)"
+.br
+.RI "\fIStatically define a test parameter and its values. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "np_runner_t * \fBnp_init\fP (void)"
+.br
+.RI "\fIInitialise the NovaProva library. \fP"
+.ti -1c
+.RI "void \fBnp_list_tests\fP (np_runner_t *, np_plan_t *)"
+.br
+.RI "\fIPrint the names of the tests in the plan to stdout. \fP"
+.ti -1c
+.RI "void \fBnp_set_concurrency\fP (np_runner_t *, int)"
+.br
+.RI "\fISet the limit on test job parallelism. \fP"
+.ti -1c
+.RI "void \fBnp_set_output_format\fP (np_runner_t *, const char *)"
+.br
+.RI "\fISet the output format. \fP"
+.ti -1c
+.RI "int \fBnp_run_tests\fP (np_runner_t *, np_plan_t *)"
+.br
+.RI "\fIRun all the tests in the plan. \fP"
+.ti -1c
+.RI "void \fBnp_done\fP (np_runner_t *)"
+.br
+.RI "\fIShut down the NovaProva library. \fP"
+.ti -1c
+.RI "np_plan_t * \fBnp_plan_new\fP (void)"
+.br
+.RI "\fICreate a new plan object. \fP"
+.ti -1c
+.RI "bool \fBnp_plan_add_specs\fP (np_plan_t *, int nspec, const char **spec)"
+.br
+.RI "\fIAdd test specifications to a plan object. \fP"
+.ti -1c
+.RI "void \fBnp_plan_delete\fP (np_plan_t *)"
+.br
+.RI "\fIDestroys a plan object. \fP"
+.ti -1c
+.RI "void \fBnp_syslog_fail\fP (const char *re)"
+.br
+.RI "\fISet up to FAIL the test on syslog messages matching a regexp. \fP"
+.ti -1c
+.RI "void \fBnp_syslog_ignore\fP (const char *re)"
+.br
+.RI "\fISet up to ignore syslog messages matching a regexp. \fP"
+.ti -1c
+.RI "void \fBnp_syslog_match\fP (const char *re, int tag)"
+.br
+.RI "\fISet up to count syslog messages matching a regexp. \fP"
+.ti -1c
+.RI "unsigned int \fBnp_syslog_count\fP (int tag)"
+.br
+.RI "\fIReturn the number of syslog matches for the given tag. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBAuthor:\fP
+.RS 4
+Greg Banks <gnb@fastmail.fm> 
+.RE
+.PP
+
+.SH "Define Documentation"
+.PP 
+.SS "#define NP_PASS   __np_pass(__FILE__, __LINE__)"
+.PP
+Causes the running test to terminate immediately with a PASS result. You will probably never need to call this, as merely reaching the end of a test function without FAILing is considered a PASS result. 
+.SS "#define NP_FAIL   __np_fail(__FILE__, __LINE__)"
+.PP
+Causes the running test to terminate immediately with a FAIL result. 
+.SS "#define NP_NOTAPPLICABLE   __np_notapplicable(__FILE__, __LINE__)"
+.PP
+Causes the running test to terminate immediately with a NOTAPPLICABLE result. The NOTAPPLICABLE result is not counted towards either failures or successes and is useful for tests whose preconditions are not satisfied and have thus not actually run. 
+.SS "#define NP_ASSERT(cc)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        if (!(cc)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT(' #cc ')'); \
+    } while(0)
+.fi
+Test that a given boolean condition is true, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_TRUE(a)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        bool _a = (a); \
+        if (!_a) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_TRUE(' #a '=%u)', _a); \
+    } while(0)
+.fi
+Test that a given boolean condition is true, otherwise FAIL the test. This is the same as \fCNP_ASSERT\fP except that the message printed on failure is slightly more helpful. 
+.SS "#define NP_ASSERT_FALSE(a)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        bool _a = (a); \
+        if (_a) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_FALSE(' #a '=%u)', _a); \
+    } while(0)
+.fi
+Test that a given boolean condition is false, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        long long _a = (a), _b = (b); \
+        if (!(_a == _b)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_EQUAL(' #a '=%lld, ' #b '=%lld)', _a, _b); \
+    } while(0)
+.fi
+Test that two signed integers are equal, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_NOT_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        long long _a = (a), _b = (b); \
+        if (!(_a != _b)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_NOT_EQUAL(' #a '=%lld, ' #b '=%lld)', _a, _b); \
+    } while(0)
+.fi
+Test that two signed integers are not equal, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_PTR_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const void *_a = (a), *_b = (b); \
+        if (!(_a == _b)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_PTR_EQUAL(' #a '=%p, ' #b '=%p)', _a, _b); \
+    } while(0)
+.fi
+Test that two pointers are equal, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_PTR_NOT_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const void *_a = (a), *_b = (b); \
+        if (!(_a != _b)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_PTR_NOT_EQUAL(' #a '=%p, ' #b '=%p)', _a, _b); \
+    } while(0)
+.fi
+Test that two pointers are not equal, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_NULL(a)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const void *_a = (a); \
+        if (!(_a == NULL)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_NULL(' #a '=%p)', _a); \
+    } while(0)
+.fi
+Test that a pointer is NULL, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_NOT_NULL(a)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const void *_a = (a); \
+        if (!(_a != NULL)) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_NOT_NULL(' #a '=%p)', _a); \
+    } while(0)
+.fi
+Test that a pointer is not NULL, otherwise FAIL the test. 
+.SS "#define NP_ASSERT_STR_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const char *_a = (a), *_b = (b); \
+        if (strcmp(_a ? _a : '', _b ? _b : '')) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_STR_EQUAL(' #a '=\'%s\', ' #b '=\'%s\')', _a, _b); \
+    } while(0)
+.fi
+Test that two strings are equal, otherwise FAIL the test. Either string can be NULL; NULL compares like the empty string. 
+.SS "#define NP_ASSERT_STR_NOT_EQUAL(a, b)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+do { \
+        const char *_a = (a), *_b = (b); \
+        if (!strcmp(_a ? _a : '', _b ? _b : '')) \
+            __np_assert_failed(__FILE__, __LINE__, \
+            'NP_ASSERT_STR_NOT_EQUAL(' #a '=\'%s\', ' #b '=\'%s\')', _a, _b); \
+    } while(0)
+.fi
+Test that two strings are not equal, otherwise FAIL the test. Either string can be NULL, it compares like the empty string. 
+.SS "#define NP_PARAMETER(nm, vals)"
+.PP
+\fBValue:\fP
+.PP
+.nf
+static char * nm ;\
+    static const struct __np_param_dec *__np_parameter_##nm(void) __attribute__((unused)); \
+    static const struct __np_param_dec *__np_parameter_##nm(void) \
+    { \
+        static const struct __np_param_dec d = { & nm , vals }; \
+        return &d; \
+    }
+.fi
+\fBParameters:\fP
+.RS 4
+\fInm\fP C identifier of the variable to be declared 
+.br
+\fIvals\fP string literal with the set of values to apply
+.RE
+.PP
+Define a \fCstatic\fP \fCchar*\fP variable called \fInm\fP, and declare it as a test parameter on the testnode corresponding to the source file in which it appears, with a set of values defined by splitting up the string literal \fIvals\fP on whitespace and commas. For example: 
+.PP
+.nf
+ NP_PARAMETER(db_backend, 'mysql,postgres');
+
+.fi
+.PP
+ Declares a variable called \fCdb_backend\fP in the current file, and at runtime every test function in this file will be run twice, once with the variable \fCdb_backend\fP set to \fC'mysql'\fP and once with it set to \fC'postgres'\fP. 
+.SH "Function Documentation"
+.PP 
+.SS "np_runner_t* np_init (void)"
+.PP
+\fBReturns:\fP
+.RS 4
+a new runner object
+.RE
+.PP
+You should call \fCnp_init\fP to initialise NovaProva before running any tests. It discovers tests in the current executable, and returns a pointer to a \fCnp_runner_t\fP object which you can pass to \fCnp_run_tests\fP to actually run the tests.
+.PP
+The first thing the function does is to ensure that the calling executable is running under Valgrind, which involves re-running the process. So be aware that any code between the start of \fCmain\fP and the call to \fCnp_init\fP will be run twice in two different processes, the second time under Valgrind. 
+.SS "void np_list_tests (np_runner_t * runner, np_plan_t * plan)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrunner\fP the runner object 
+.br
+\fIplan\fP optional plan object
+.RE
+.PP
+If \fIplan\fP is NULL, a temporary default plan is created which will result in all the discovered tests being listed in testnode tree order. 
+.SS "void np_set_concurrency (np_runner_t * runner, int n)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrunner\fP the runner object 
+.br
+\fIn\fP concurrency value to set
+.RE
+.PP
+Set the maximum number of test jobs which will be run at the same time, to \fIn\fP. The default value is 1, meaning tests will be run serially. A value of 0 is shorthand for one job per online CPU in the system, which is likely to be the most efficient use of the system. 
+.SS "void np_set_output_format (np_runner_t * runner, const char * fmt)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrunner\fP the runner object 
+.br
+\fIfmt\fP string naming the output format
+.RE
+.PP
+Set the format in which test results will be emitted. Available formats are:
+.PP
+.IP "\(bu" 2
+\fB'junit'\fP a directory called \fCreports/\fP will be created with XML files in jUnit format, suitable for use with upstream processors which accept jUnit files, such as the Jenkins CI server.
+.PP
+.PP
+.IP "\(bu" 2
+\fB'text'\fP a stream of tests and events is emitted to stdout, co-mingled with anything emitted to stdout by the test code. This is the default if \fCnp_set_output_format\fP is not called.
+.PP
+.PP
+Note that the function is a misnomer, it actually \fBadds\fP an output format. Also note that if the C++ API were documented, you could write your own output formats by deriving from \fCnp::listener_t\fP. 
+.SS "int np_run_tests (np_runner_t * runner, np_plan_t * plan)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrunner\fP the runner object 
+.br
+\fIplan\fP optional plan object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success or non-zero if any tests failed.
+.RE
+.PP
+Uses the \fIrunner\fP object to run all the tests described in the \fIplan\fP object. If \fIplan\fP is NULL, a temporary default plan is created which will result in all the discovered tests being run in testnode tree order. 
+.SS "void np_done (np_runner_t * runner)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrunner\fP The runner object to destroy
+.RE
+.PP
+Destroys the given runner object and shuts down the library. 
+.SS "np_plan_t* np_plan_new (void)"
+.PP
+\fBReturns:\fP
+.RS 4
+a new plan object
+.RE
+.PP
+A plan object can be used to configure a \fCnp_runner_t\fP object to run (or list to stdout) a subset of all the discovered tests. Note that if you want to run all tests, you do not need to create a plan at all; passing NULL to \fCnp_run_tests\fP has that effect. 
+.SS "bool np_plan_add_specs (np_plan_t * plan, int nspec, const char ** spec)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIplan\fP the plan object 
+.br
+\fInspec\fP number of specification strings 
+.br
+\fIspec\fP array of specification strings 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+false if any of the test specifications could not be found, true on success.
+.RE
+.PP
+Add a sequence of test specifications to the plan object. Each test specification is a string which matches a testnode in the discovered testnode hierarchy, and will cause that node plus all of its descendants to be added to the plan. The interface is designed to take command-line arguments from your test runner program after options have been parsed with \fCgetopt\fP. 
+.SS "void np_plan_delete (np_plan_t * plan)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIplan\fP the plan object to destroy 
+.RE
+.PP
+
+.SS "void np_syslog_fail (const char * re)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIre\fP POSIX extended regular expression to match
+.RE
+.PP
+From this point until the end of the test, if any code emits a message to \fCsyslog\fP which matches the given regular expression, the test will FAIL immediately as if \fCNP_FAIL\fP had been called from inside \fCsyslog\fP. 
+.SS "void np_syslog_ignore (const char * re)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIre\fP POSIX extended regular expression to match
+.RE
+.PP
+From this point until the end of the test function, if any code emits a message to \fCsyslog\fP which matches the given regular expression, nothing will happen. Note that this is the default behaviour, so this call is only useful in complex cases where there are multiple overlapping regexps being used for syslog matching. 
+.SS "void np_syslog_match (const char * re, int tag)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fIre\fP POSIX extended regular expression to match 
+.br
+\fItag\fP tag for later matching of counts
+.RE
+.PP
+From this point until the end of the test function, if any code emits a message to \fCsyslog\fP which matches the given regular expression, a counter will be incremented and no other action will be taken. The counts can be retrieved by calling \fCnp_syslog_count\fP. Note that \fItag\fP does not need to be unique; in fact always passing 0 is reasonable. 
+.SS "unsigned int np_syslog_count (int tag)"
+.PP
+\fBParameters:\fP
+.RS 4
+\fItag\fP tag to choose which matches to count, or -1 for all 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+count of matched messages
+.RE
+.PP
+Calculate and return the number of messages emitted to \fCsyslog\fP which matched a regexp set up earlier using \fCnp_syslog_match\fP. If \fItag\fP is less than zero, all match counts will be returned, otherwise only the match counts for regexps registered with the same tag will be returned. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for NovaProva from the source code.

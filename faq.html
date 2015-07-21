@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <!-- Copyright (c) 2012-2015 Greg Banks. All Rights Reserved.  -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>novaprova - FAQ</title>
+  <style>
+body {
+    color: #000000;
+    margin: 0px;
+    padding: 0px;
+    background: #fffcf5;
+}
+@media (max-width: 450px) {
+    #header {
+	background: #fffcf5;
+	padding: 0px;
+	margin: 0px;
+    }
+    #header h1 {
+	text-align: left;
+	font: 60px verdana,arial,helvetica,sans-serif;
+	margin: 0px;
+    }
+    #header p {
+	width: 66%;
+	text-align: left;
+	margin-left: 5px;
+	font: bold italic 16px verdana,arial,helvetica,sans-serif;
+    }
+}
+@media (min-width: 451px) {
+    /* on large screens we have a background image 
+     * to fill up the boring space on the right */
+    #header {
+	background: #fffcf5;
+	height: 252px;
+	padding: 0px;
+	margin: 0px;
+	background-image: url("iStock_000007540791Small_scaled.jpg");
+	background-position: right;
+	background-repeat: no-repeat;
+    }
+    #header h1 {
+	text-align: left;
+	font: 72px verdana,arial,helvetica,sans-serif;
+	margin: 0px;
+    }
+    #header p {
+	text-align: left;
+	margin-left: 30px;
+	font: italic 16px verdana,arial,helvetica,sans-serif;
+    }
+}
+#nav {
+    background: #808080;
+    color: #ffffff;
+}
+#nav ul {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+#nav li {
+    display: inline-block;
+    text-align: left;
+    padding: 5px 20px 5px 20px;
+    font: 12pt verdana,arial,helvetica,sans-serif;
+}
+/* getting Webkit to actually display the hover property
+ * is surprisingly unobvious... */
+#nav li:hover a, #nav li a:hover {
+    color: #ffffff;
+    text-shadow: #404040 1px 1px 1px;
+}
+#nav a:link { color: #e0e0e0; }
+#nav a:visited { color: #e0e0e0; }
+#wrap {
+    background: #ffffff;
+}
+.column {
+    padding: 0px;
+    font: 12pt verdana,arial,helvetica,sans-serif;
+}
+#docs {
+    padding: 10px;
+}
+@media (max-width: 450px) {
+    /* small screens: columns arranged vertically */
+    #column1 {
+	width: 100%;
+	margin: 0px;
+    }
+    #column2 {
+	width: 100%;
+	margin: 0px;
+    }
+}
+@media (min-width: 451px) {
+    /* large screens: columns arranged horizontally */
+    #column1 {
+	width: 50%;
+	margin: 0px;
+	float: left;
+    }
+    #column2 {
+	border-left: 1px solid #e0e0e0;
+	width: 50%;
+	margin: 0px 0px 0px 50%;
+    }
+}
+.column p {
+    margin: 6px;
+}
+.column li {
+    margin: 6px;
+}
+.column a:link, .column a:visited {
+    color: #808080;
+}
+#faq {
+    padding: 10px;
+}
+@media (max-device-width: 400px) {
+#faq dt {
+    font-weight: bold;
+    /* more room for tap targets */
+    margin: 12px;
+}
+#faq dd {
+    -webkit-margin-start: 0px;
+}
+}
+@media (min-device-width: 401px) {
+#faq dt {
+    font-weight: bold;
+    margin: 6px;
+}
+}
+@media (max-device-width: 400px) {
+#downloads li {
+    /* more room for tap targets */
+    margin: 12px;
+}
+#contact li {
+    /* more room for tap targets */
+    margin: 12px;
+}
+}
+#footer {
+    background: #fffcf5;
+    border-top: 3px solid #808080;
+    width: 100%;
+    clear: left;
+}
+#footer p {
+    font: 8pt verdana,arial,helvetica,sans-serif;
+    text-align: center;
+    margin: 4px;
+}
+H2 { font: bold 18pt verdana,arial,helvetica,sans-serif; }
+H3 { font: bold 14pt verdana,arial,helvetica,sans-serif; }
+UL { font: 12pt verdana,arial,helvetica,sans-serif; }
+P { font: 12pt verdana,arial,helvetica,sans-serif; }
+P.small { font: 10pt verdana,arial,helvetica,sans-serif; }
+P B { font: bold 12pt verdana,arial,helvetica,sans-serif; }
+P EM { font: italic 12pt verdana,arial,helvetica,sans-serif; }
+TD { font: 12pt verdana,arial,helvetica,sans-serif; }
+TD B { font: bold 12pt verdana,arial,helvetica,sans-serif; }
+PRE { font: 12pt lucidatypewriter,lucidasanstypewriter,courier,monospace; }
+all.program { font: bold 12pt verdana,arial,helvetica,sans-serif; }
+all.option { font: bold 12pt verdana,arial,helvetica,sans-serif; }
+all.function { font: bold 12pt verdana,arial,helvetica,sans-serif; }
+PRE.example {
+  font: 12pt lucidatypewriter,lucidasanstypewriter,courier,monospace;
+  color: #000000;
+  background-color: #d0d0f6;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1pt;
+  padding: 10pt;
+  white-space: pre;
+}
+PRE.source {
+  font: 12pt lucidatypewriter,lucidasanstypewriter,courier,monospace;
+  color: #000000;
+  background-color: #d0d0f6;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 1pt;
+  padding: 10pt;
+  white-space: pre;
+}
+TD.hilite {
+  color: #000000;
+  background-color: #d0d0f6;
+}
+TR.hilite {
+  color: #000000;
+  background-color: #d0d0f6;
+}
+P.quote {
+  color: #000000;
+  background-color: #d0d0f6;
+  padding: 20pt;
+}
+/* vim:set ft=css: */
+  </style>
+  <meta name="keywords" content="novaprova,test driven development,TDD,xUnit,unit,test,unit test,framework,test framework,unit test framework">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+</head>
+<body>
+
+<div id="header">
+<h1>novaprova</h1>
+<p>new generation unit test framework for C</p>
+</div>
+
+<div id="wrap">
+
+<div id="nav">
+<ul>
+<li><a href="index.html">Home</a>
+<li><a href="docs.html">Documentation</a>
+<li><a href="download.html">Download</a>
+<li><a href="https://github.com/gnb/novaprova">Git</a>
+<li><a href="contact.html">Contact</a>
+</ul>
+</div>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function()
+{
+    var dts = $('#faq dt');
+    dts.click(function() {
+	$(this).next().toggle('medium');
+	location.hash = '#' + $('a', this).prop('name');
+	return false;
+    });
+    dts.next().hide();
+    if (location.hash)
+    {
+	$('#faq dt a[href="' + location.hash + '"]').parent().next().show();
+    }
+});
+
+</script>
+
+<div id="faq" class="column">
+
+<dl>
+
+<dt><a href="#novaprova_name" name="novaprova_name">Why did you call it Novaprova?</a></dt>
+<dd>
+<p>
+Because all the obvious names were already in use.
+</p>
+<p>
+The name Novaprova comes from the modern Italian word
+<a href="http://www.wordreference.com/iten/prova">prova</a>,
+one of whose meanings is <i>a test, a trial, an experiment</i>,
+and the archaic Italian word <b>nova</b> which like the modern Italian
+<a href="http://www.wordreference.com/iten/nuova">nuova</a>
+means <i>new</i>.  Hence, <b>new test</b>. 
+</p>
+<p>
+Disclaimer: I don't speak Italian, but an actual Italian told me this
+is a silly but clear reading of the name.  Also, it rhymes and it
+sounds vaguely like a drug.
+</p>
+</dd>
+
+<dt><a href="#reflection" name="reflection">Reflection?  That's not possible in C!</a></dt>
+<dd>
+<p>
+Sure it is.  All you need to do is to be able to read the debugging
+information that the compiler adds to the executable when you build with
+<a href="http://gcc.gnu.org/onlinedocs/gcc-4.7.0/gcc/Debugging-Options.html#Debugging-Options">the <tt>-g</tt> option</a>.
+The debugger reads that information, so it can't be too hard.
+</p>
+<p>
+It turns out that almost every modern UNIX-like system uses the highly portable
+<a href="http://www.dwarfstd.org/">DWARF standard</a> for debugging
+information, so there's little system-dependent code involved.
+The only tricky bit is reading that information for your own process,
+rather than for another process.  Novaprova uses some
+<a href="http://linux.die.net/man/3/dl_iterate_phdr">runtime linker magic</a>
+and
+<a href="http://www.gnu.org/software/binutils/">the <tt>bfd</tt> library</a>
+to find the on-disk executable and shared library images for the
+program it's linked into (including libraries opened with <tt>dlopen</tt>),
+and some hand-rolled code to scan the debug information.
+</p>
+<p>
+There are other libraries that claim to do "reflection" for C++, but they
+all rely on magic macros or other tricks to explicitly mark classes or
+functions.  By contrast, Novaprova's reflection can see any class, namespace,
+variable or function which the debugger can see, without the explicit
+co-operation of the code reflected.
+</p>
+<p>
+Having real reflection is extremely useful for a test framework.  At the
+very least it means that test functions can be discovered at runtime
+by trawling through all the functions in an executable and matching
+function names and signatures.
+</p>
+<p>
+As far as I know, this is a feature unique to Novaprova.
+</p>
+</dd>
+
+<dt><a href="#runtime_errors" name="runtime_errors">What runtime errors does Novaprova catch?</a></dt>
+<dd>
+Novaprova detects the following runtime errors and reports them
+as test failures:
+  <ul>
+  <li>calls to <tt>exit()</tt>
+  <li>calls to <tt>syslog()</tt>
+  <li>failed calls to the libc <tt>assert()</tt>
+  <li>memory accesses which trigger SIGSEGV/SIGBUS
+  <li>memory leaks (using Valgrind)
+  <li>buffer over-runs (using Valgrind)
+  <li>use of uninitialised variables (using Valgrind)
+  <li>looping or deadlocked tests, using a timeout
+  </ul>
+</dd>
+
+<dt><a href="#mocking" name="mocking">Runtime mocking in C - you're kidding me?</a></dt>
+<dd>
+<p>
+Novaprova implements function mocking using a technology similar to
+debugger breakpoints, but working in the same process rather than in
+a child process.
+</p>
+<p>
+There are several test frameworks that support mocking for C, but
+they all rely on the linker choosing to link against the mock
+function rather than the mocked one.  This has major limitations.
+</p>
+<ul>
+<li>The mocked function must be <tt>extern</tt>
+<li>The mocked function must not in the same object file or
+shared library as the calls to it which need to be intercepted
+(or special care must be taken to make the mocked function an
+ELF weak symbol).
+<li>Functions can only be mocked once in a given test executable.
+<li>If a function is mocked, it is mocked for all the tests in that
+test executable (so the mock function has to be more complex).
+<li>The mock functions are installed at build time.
+</ul>
+<p>
+Novaprova's runtime mocking removes all these limitations!
+</p>
+<p>
+Novaprova's mocks can be attached to any testnode.  They are installed just
+before the testnode or any of it's descendants is run and uninstalled after
+the test finishes.  This means you can safely mock functions different
+ways in different tests, or mock functions in only some tests, or
+mock (almost all) functions which are used by the test framework itself.
+You can mock functions that are called from other functions in the same
+object file.  You can mock <tt>static</tt> functions, as long as you
+know the name of the function or have it's address.
+</p>
+<p>
+As far as I know, this is a feature unique to Novaprova.
+</p>
+</dd>
+
+<dt><a href="#parameters" name="parameters">What are test parameters?</a></dt>
+<dd>
+<p>
+<a
+href="http://en.wikipedia.org/wiki/Unit_test#Parameterized_Unit_Testing_.28PUT.29">Test
+parameters</a> are a useful way of re-using test code.
+</p>
+<p>
+Parameters in Novaprova are <tt>static char*</tt> variables with a series
+of pre-determined string values, which the test code or fixture setup
+code can use to control aspects of its behaviour.  Novaprova knows which
+parameters apply to which test, and will run the test once for each
+combination of values of the parameters, setting up the parameters
+before each run.  The result from each run is reported separately.
+</p>
+</dd>
+
+<dt><a href="#building" name="building">Building a test executable</a></dt>
+<dd>
+<p>
+A test executable which uses Novaprova can be built like any other
+C executable.  Tests are written in C, and no special build-time
+work is necessary (the magic all happens at runtime).
+</p>
+<p>
+Even though Novaprova is implemented using C++ internally, it has a
+full C API so that tests can be implemented without a C++ compiler,
+just a C compiler.  This is important when you have older code whose
+headers may or may not compile cleanly under C++.
+</p>
+</dd>
+
+</dl>
+
+<!-- <a href="http://en.wikipedia.org/wiki/System_under_test">SUT</a> -->
+
+</div>
+
+<div id="footer">
+<p>&copy; 2012-2015 Greg Banks.  All Rights Reserved.</p>
+</div>
+
+</div>
+
+</body>
+</html>

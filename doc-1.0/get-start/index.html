@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <!-- Copyright (c) 2012-2015 Greg Banks. All Rights Reserved.  -->
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <title>NovaProva Getting Started</title>
+  <link href="../../novaprova.css" rel="stylesheet" type="text/css">
+  <link href="pygmentize.css" rel="stylesheet" type="text/css">
+  <meta name="keywords" content="novaprova,test driven development,TDD,xUnit,unit,test,unit test,framework,test framework,unit test framework">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div id="header">
+<h1>novaprova</h1>
+<p>new generation unit test framework for C</p>
+</div>
+
+<div id="wrap">
+
+<div id="nav">
+<ul>
+<li><a href="../../index.html">Home</a>
+<li><a href="../../docs.html">Documentation</a>
+<li><a href="../../download.html">Download</a>
+<li><a href="https://github.com/gnb/novaprova">Git</a>
+<li><a href="../../contact.html">Contact</a>
+</ul>
+</div>
+
+<div id="docs" class="column">
+
+<!--
+  Copyright 2011-2012 Gregory Banks
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<h1 id="getting-started">Getting Started</h1>
+<h2 id="installation">Installation</h2>
+<h3 id="from-a-release-tarball">From A Release Tarball</h3>
+<p>First, download a release tarball.</p>
+<p>Novaprova is intended to be built in the usual way that any open source
+C software is built.  However at the moment it doesn't even use
+autotools, so there's no configure script.
+To build you need to have g++ and gcc installed.  You will also need to
+have the <em>valgrind.h</em> header file installed, which is
+typically in a package named something like <em>valgrind-dev</em> .</p>
+<div class="codehilite"><pre><span class="c"># download the release tarball from http://sourceforge.net/projects/novaprova/files/</span>
+tar -xvf novaprova-0.1.tar.bz2
+<span class="nb">cd </span>novaprova-0.1
+make
+make install
+</pre></div>
+
+
+<h3 id="from-read-only-git">From Read-Only Git</h3>
+<p>For advanced users only.  Novaprova needs several more tools to build
+from a Git checkout than from a release tarball, mainly for the
+documentation.  You will need to have
+<a href="http://freewisdom.org/projects/python-markdown/">Python Markdown</a>,
+<a href="http://pygments.org/">Pygments</a>, and
+<a href="http://www.doxygen.org/">Doxygen</a> installed.  On an Ubuntu system these
+are in packages <em>python-markdown</em>, <em>python-pygments</em>, and <em>doxygen</em>
+respectively.</p>
+<div class="codehilite"><pre>git clone git://github.com/gnb/novaprova.git
+<span class="nb">cd </span>novaprova
+make
+make install
+</pre></div>
+
+
+<h2 id="building-a-test-executable">Building a Test Executable</h2>
+<p>Because you're testing C code, the first step is to build a test runner
+executable.  This executable will contain all your tests, the Code Under Test
+and a small <em>main</em> routine, and will be linked against the NovaProva
+library and whatever other libraries your Code Under Test needs.  Typically, this
+is done using the <em>check:</em> make target to both build and run the tests.</p>
+<div class="codehilite"><pre><span class="c"># Makefile</span>
+
+<span class="nf">check</span><span class="o">:</span> <span class="m">testrunner</span>
+    ./testrunner
+
+<span class="nv">TEST_SOURCE</span><span class="o">=</span> mytest.c
+<span class="nv">TEST_OBJS</span><span class="o">=</span>  <span class="k">$(</span>TEST_SOURCE:.c<span class="o">=</span>.o<span class="k">)</span>
+
+testrunner:  testrunner.o <span class="k">$(</span>TEST_OBJS<span class="k">)</span> libmycode.a
+    <span class="k">$(</span>LINK.c<span class="k">)</span> -o <span class="nv">$@</span> testrunner.o <span class="k">$(</span>TEST_OBJS<span class="k">)</span> libmycode.a <span class="k">$(</span>NOVAPROVA_LIBS<span class="k">)</span>
+</pre></div>
+
+
+<p>NovaProva uses the GNOME <em>pkgconfig</em> system to make it easy to find the
+right set of compile and link flags.</p>
+<div class="codehilite"><pre><span class="nv">NOVAPROVA_CFLAGS</span><span class="o">=</span> <span class="k">$(</span>shell pkg-config --cflags novaprova<span class="k">)</span>
+<span class="nv">NOVAPROVA_LIBS</span><span class="o">=</span> <span class="k">$(</span>shell pkg-config --libs novaprova<span class="k">)</span>
+
+<span class="nv">CFLAGS</span><span class="o">=</span> ... -g <span class="k">$(</span>NOVAPROVA_CFLAGS<span class="k">)</span> ...
+</pre></div>
+
+
+<p>Note that you only need to compile the test code <em>mytest.c</em> and the test
+runner code <em>testrunner.c</em> with <em>NOVAPROVA_CFLAGS</em>.  NovaProva does <em>not</em>
+use any magical compile options or do any pre-processing of test code.</p>
+<p>However, you should make sure that at least the test code is built with
+the <em>-g</em> option to include debugging information.  NovaProva uses that
+information to discover tests at runtime.</p>
+<p>Your <em>main</em> routine in <em>testrunner.c</em> will initialise the NovaProva
+library by calling <em>np_init</em> and then call <em>np_run_tests</em> to do all the
+heavy lifting.  Here's a minimal <em>main</em>.</p>
+<div class="codehilite"><pre><span class="c">/* testrunner.c */</span>
+<span class="cp">#include &lt;stdlib.h&gt;</span>
+<span class="cp">#include &lt;unistd.h&gt;</span>
+<span class="cp">#include &lt;np.h&gt;     </span><span class="c">/* NovaProva library */</span><span class="cp"></span>
+
+<span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">ec</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">np_runner_t</span> <span class="o">*</span><span class="n">runner</span><span class="p">;</span>
+
+    <span class="c">/* Initialise the NovaProva library */</span>
+    <span class="n">runner</span> <span class="o">=</span> <span class="n">np_init</span><span class="p">();</span>
+
+    <span class="c">/* Run all the discovered tests */</span>
+    <span class="n">ec</span> <span class="o">=</span> <span class="n">np_run_tests</span><span class="p">(</span><span class="n">runner</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+
+    <span class="c">/* Shut down the NovaProva library */</span>
+    <span class="n">np_done</span><span class="p">(</span><span class="n">runner</span><span class="p">);</span>
+
+    <span class="n">exit</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The last piece of the puzzle is writing some tests.  Each test is a
+single C function which takes no parameters and returns <em>void</em>.  Unlike
+other unit test frameworks, there's no API to call or magical macro to
+use to register tests with the library.  Instead you just name the
+function <em>test_something</em>, and NovaProva will automatically create a
+test called <em>something</em> which calls the function.</p>
+<p>For example, let's create a test called <em>simple</em> which tests
+the function <em>myatoi</em> which has the same signature and semantics
+as the well-known <em>atoi</em> function in the standard C library.</p>
+<div class="codehilite"><pre><span class="c">/* mytest.c */</span>
+<span class="cp">#include &lt;np.h&gt;     </span><span class="c">/* NovaProva library */</span><span class="cp"></span>
+<span class="cp">#include &quot;mycode.h&quot; </span><span class="c">/* declares the Code Under Test */</span><span class="cp"></span>
+
+<span class="k">static</span> <span class="kt">void</span> <span class="nf">test_simple</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">r</span><span class="p">;</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">myatoi</span><span class="p">(</span><span class="s">&quot;42&quot;</span><span class="p">);</span>
+    <span class="n">NP_ASSERT_EQUAL</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>The macro <em>NP_ASSERT_EQUAL</em> checks that it's two integer arguments are
+equal, and if not fails the test.  Note that if the assert fails, the
+test function terminates immediately.  If the test function gets to it's
+end and returns naturally, the test is considered to have passed.</p>
+<p>If we build run this test we get output something like this.</p>
+<div class="codehilite"><pre>% make check
+./testrunner
+np: starting valgrind
+np: running
+np: running: <span class="s2">&quot;1:simple&quot;</span>
+PASS 1:simple
+np: 1 run 0 failed
+</pre></div>
+
+
+<p>As expected, the test passed.  Now let's add another test.  The <em>myatoi</em>
+function is supposed to convert the initial numeric part of the argument
+string, i.e. to stop when it sees a non-numeric character.  Let's feed
+it a string which will exercise this behaviour and see what happens.</p>
+<div class="codehilite"><pre><span class="k">static</span> <span class="kt">void</span> <span class="nf">test_initial</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">r</span><span class="p">;</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">myatoi</span><span class="p">(</span><span class="s">&quot;4=2&quot;</span><span class="p">);</span>
+    <span class="n">NP_ASSERT_EQUAL</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Running the tests we see:</p>
+<div class="codehilite"><pre>% make check
+./testrunner
+np: starting valgrind
+np: running
+np: running: <span class="s2">&quot;1:mytest.simple&quot;</span>
+PASS 1:mytest.simple
+np: running: <span class="s2">&quot;2:mytest.initial&quot;</span>
+EVENT ASSERT NP_ASSERT_EQUAL<span class="o">(</span><span class="nv">r</span><span class="o">=</span>532, <span class="nv">4</span><span class="o">=</span>4<span class="o">)</span>
+at 0x80529F2: np::spiegel::describe_stacktrace <span class="o">(</span>np/spiegel/spiegel.cxx<span class="o">)</span>
+by 0x804C0FC: np::event_t::with_stack <span class="o">(</span>np/event.cxx<span class="o">)</span>
+by 0x804B2D2: __np_assert_failed <span class="o">(</span>uasserts.c<span class="o">)</span>
+by 0x804AC27: test_initial <span class="o">(</span>mytest.c<span class="o">)</span>
+by 0x80522D0: np::spiegel::function_t::invoke <span class="o">(</span>np/spiegel/spiegel.cxx<span class="o">)</span>
+by 0x804C731: np::runner_t::run_function <span class="o">(</span>np/runner.cxx<span class="o">)</span>
+by 0x804D5C4: np::runner_t::run_test_code <span class="o">(</span>np/runner.cxx<span class="o">)</span>
+by 0x804D831: np::runner_t::begin_job <span class="o">(</span>np/runner.cxx<span class="o">)</span>
+by 0x804E0D4: np::runner_t::run_tests <span class="o">(</span>np/runner.cxx<span class="o">)</span>
+by 0x804E22C: np_run_tests <span class="o">(</span>np/runner.cxx<span class="o">)</span>
+by 0x804AB12: main <span class="o">(</span>testrunner.c<span class="o">)</span>
+
+FAIL 2:mytest.initial
+np: 2 run 1 failed
+make: *** <span class="o">[</span>check<span class="o">]</span> Error 1
+</pre></div>
+
+
+<p>The first thing we see is that the name of the old test has changed from
+<em>simple</em> to <em>mytest.simple</em>.  NovaProva organises tests into a tree whose
+node names are derived from the test source directory, test source filename,
+and test function name.  This tree is pruned down to the smallest possible
+size at which the root of the tree is unique.  So when we added a second test
+in the same source file, the full name of both tests now includes a component
+<em>mytest</em> derived from the name of the source file <em>mytest.c</em>.</p>
+<p>Note also that the new test failed.  Immediately after the "np: running:"
+message we see that the <em>NP_ASSERT_EQUAL</em> macro has failed, and printed both
+its arguments as well as a stack trace.  We expected the variable <em>r</em> to equal
+to 4 but its actual value at runtime was 532; clearly the <em>myatoi</em> function
+did not behave correctly.  We found a bug!</p>
+</div>
+
+<div id="footer">
+<p>&copy; 2012-2015 Greg Banks.  All Rights Reserved.</p>
+</div>
+
+</div>
+
+</body>
+</html>
