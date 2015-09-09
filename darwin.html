@@ -3,7 +3,7 @@
 <head>
   <!-- Copyright (c) 2012-2015 Greg Banks. All Rights Reserved.  -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <title>novaprova</title>
+  <title>novaprova on Mac</title>
   <style>
 body {
     color: #000000;
@@ -228,60 +228,53 @@ P.quote {
 </ul>
 </div>
 
-<div id="column1" class="column">
+<div id="column" class="column">
 
-<p>Novaprova is the newest way to organise and run unit tests
-for libraries and programs written in the C language.
-Novaprova takes
-<a href="http://en.wikipedia.org/wiki/XUnit">the xUnit paradigm</a>
-into the 21st century.</p>
+<h2>Status</h2>
 
-<p>Novaprova has many advanced features previously only available
-in unit test frameworks for languages such as Java or Perl.</p>
+<p>Novaprova has a Mac OS X port under way but not yet released.
+The current status is:</p>
 
 <ul>
 
-<li>Provides a familiar, xUnit-like assertion syntax.
+<li><b>beta</b>: ready to try</li>
 
-<li>Runs tests using <a href="http://valgrind.org/">Valgrind</a>.
+<li>available in the <tt>darwin</tt> branch on GitHub</li>
 
-<li>Discovers tests fully dynamically at runtime using
-<a href="faq.html#reflection">reflection</a>.
+<li>runs and passes all regresssion tests</li>
 
-<li>Detects and gracefully reports many
-<a href="faq.html#runtime_errors">C runtime errors</a>.
+<li>tested on Darwin 10.9.5 only</li>
 
-</ul>
+<li>requires a very recent, unreleased,
+    <a href="http://www.valgrind.org/">Valgrind</a> build.</li>
 
-</div>
-<div id="column2" class="column">
-
-<ul>
-
-<li>Supports <a href="http://en.wikipedia.org/wiki/Test_fixture">fixture</a>
-setup and teardown functions.
-
-<li>Supports <a href="http://en.wikipedia.org/wiki/Mock_object">mocking</a>
-of C functions <a href="faq.html#mocking">at runtime</a>.
-
-<li>Supports
-<a href="faq.html#parameters">test parameters</a>.
-
-<li>Tests can be built and linked entirely with a C compiler.
-
-<li>Emits a jUnit XML report suitable for modern
-<a href="http://jenkins-ci.org/">CI servers</a>.
-
-<li>Runs tests in parallel to take advantage of today's multiprocessor
-machines.
-
-<li>Runs tests fully isolated, in a new process per test.
-
+<li>no Mac-specific packaging has been done (e.g. a Framework,
+    and an installer or <a href="http://brew.sh/">Homebrew</a> package).</li>
 
 </ul>
 
-<p>Novaprova works today on 32bit and 64bit x86 Linux. A
-<a href="darwin.html">Mac port</a> is underway.</p>
+<h2>Getting Valgrind</h2>
+
+<p>The latest release of Valgrind at time of writing is 3.10.1.  This
+version contains a bug which prevents many of the advanced features
+of Novaprova from working.  The fix is in SVN but not yet released
+(presumably it will be in 3.11).  So to try Novaprova on Darwin you
+will need to:</p>
+
+<ol>
+
+<li>Check out Valgrind from SVN.  <a href="http://valgrind.org/downloads/repository.html">Start here</a></li>
+
+<li>Build and install Valgrind, e.g. into <tt>/usr/local</tt>.  Make
+sure to either uninstall the Valgrind you got using Homebrew or install
+this one in a different directory.</li>
+
+<li>Check out the <tt>darwin</tt> branch from <a
+href="https://github.com/novaprova/novaprova">the Novaprova github repo</a>.</li>
+
+<li>Configure Novaprova to use the newly built Valgrind, e.g.
+<tt>./configure --with-valgrind=/usr/local/bin/valgrind</tt>
+</li>
 
 </div>
 
